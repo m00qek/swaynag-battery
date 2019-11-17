@@ -7,11 +7,37 @@ import (
 	"strings"
 )
 
+type Status uint8
+
+const (
+	UNKNOWN      Status = 0
+	CHARGING     Status = 1
+	DISCHARGING  Status = 2
+	NOT_CHARGING Status = 3
+	FULL         Status = 4
+)
+
 type Battery struct {
 	Name       string
 	ModelName  string
 	Technology string
 	Capacity   int
+	Status     Status
+}
+
+func parseStatus(value string) Status {
+	switch value {
+	case "Charging":
+		return CHARGING
+	case "Discharging":
+		return DISCHARGING
+	case "Not charging":
+		return NOT_CHARGING
+	case "Full":
+		return FULL
+	default:
+		return UNKNOWN
+	}
 }
 
 func load(path string) ([]string, error) {
@@ -55,6 +81,7 @@ func build(info map[string]string) (*Battery, error) {
 		Name:       info["POWER_SUPPLY_NAME"],
 		Capacity:   capacity,
 		ModelName:  info["POWER_SUPPLY_MODEL_NAME"],
+		Status:     parseStatus(info["POWER_SUPPLY_STATUS"]),
 		Technology: info["POWER_SUPPLY_TECHNOLOGY"],
 	}, nil
 }

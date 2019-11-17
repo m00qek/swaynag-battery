@@ -50,3 +50,22 @@ func CloseMessage(process MessageProcess) {
 	defer systemProcess.Release()
 	systemProcess.Signal(os.Interrupt)
 }
+
+func ShowAll(message string, processes []MessageProcess) []MessageProcess {
+	var openProcesses []MessageProcess
+	for _, process := range processes {
+		newProcess, _ := ShowMessage(message, process)
+		if newProcess == nil {
+			openProcesses = append(openProcesses, process)
+		} else {
+			openProcesses = append(openProcesses, *newProcess)
+		}
+	}
+	return openProcesses
+}
+
+func CloseAll(processes []MessageProcess) {
+	for _, process := range processes {
+		CloseMessage(process)
+	}
+}
