@@ -50,13 +50,14 @@ func CommandLineParameters() Parameters {
 	interval, _ := time.ParseDuration(args["--interval"].(string))
 	threshold, _ := strconv.Atoi(args["--threshold"].(string))
 
-	displays, ok := args["--displays"].(string)
-	if !ok {
-		displays = ""
+	displays := []string{}
+	d, ok := args["--displays"].(string)
+	if ok {
+		displays = strings.Split(d, ",")
 	}
 
 	return Parameters{
-		displays:  SetFrom(strings.Split(displays, ",")),
+		displays:  SetFrom(displays),
 		interval:  interval,
 		message:   "You battery is running low. Please plug in a power adapter",
 		threshold: threshold,
