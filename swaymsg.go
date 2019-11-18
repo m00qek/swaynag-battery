@@ -26,9 +26,9 @@ func filterActive(displays []Display) []string {
 	return activeDisplays
 }
 
-func ActiveDisplays() []string {
+func ActiveDisplays() StringSet {
 	var displays []Display
 	jsonOutput := run()
 	json.Unmarshal([]byte(jsonOutput), &displays)
-	return filterActive(displays)
+	return SetFrom(filterActive(displays))
 }
