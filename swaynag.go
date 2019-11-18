@@ -8,13 +8,13 @@ import (
 	ps "github.com/mitchellh/go-ps"
 )
 
-type MessageProcess struct {
+type Message struct {
 	PID     int
 	Display string
 }
 
-func show(message string, display string) (*MessageProcess, error) {
-	cmd := exec.Command("swaynag", "--message", message, "--output", display)
+func show(text string, display string) (*Message, error) {
+	cmd := exec.Command("swaynag", "--message", text, "--output", display)
 
 	err := cmd.Start()
 	if err != nil {
@@ -25,7 +25,7 @@ func show(message string, display string) (*MessageProcess, error) {
 		cmd.Wait()
 	}()
 
-	return &MessageProcess{PID: cmd.Process.Pid, Display: display}, nil
+	return &Message{PID: cmd.Process.Pid, Display: display}, nil
 }
 
 func isSwaynag(process ps.Process, err error) bool {
@@ -34,38 +34,37 @@ func isSwaynag(process ps.Process, err error) bool {
 		strings.HasSuffix(process.Executable(), "swaynag")
 }
 
-func ShowMessage(message string, process MessageProcess) (*MessageProcess, error) {
-	if isSwaynag(ps.FindProcess(process.PID)) {
-		return &process, nil
+func ShowMessage(text string, message Message) (*Message, error) {
+	if isSwaynag(ps.FindProcess(message.PID)) {
+		return &message, nil
 	}
-	return show(message, process.Display)
+	return show(text, message.Display)
 }
 
-func CloseMessage(process MessageProcess) {
-	systemProcess, err := os.FindProcess(process.PID)
+func CloseMessage(message Message) {
+	process, err := os.FindProcess(message.PID)
 	if err != nil {
 		return
 	}
-
-	defer systemProcess.Release()
-	systemProcess.Signal(os.Interrupt)
+	defer process.Release()
+	process.Signal(os.Interrupt)
 }
 
-func ShowAll(message string, processes []MessageProcess) []MessageProcess {
-	var openProcesses []MessageProcess
-	for _, process := range processes {
-		newProcess, _ := ShowMessage(message, process)
-		if newProcess == nil {
-			openProcesses = append(openProcesses, process)
+func ShowAll(text string, messages []Message) []Message {
+	var openMessages []Message
+	for _, message := range messages {
+		newMessage, _ := ShowMessage(text, message)
+		if newMessage == nil {
+			openMessages = append(openMessages, message)
 		} else {
-			openProcesses = append(openProcesses, *newProcess)
+			openMessages = append(openMessages, *newMessage)
 		}
 	}
-	return openProcesses
+	return openMessages
 }
 
-func CloseAll(processes []MessageProcess) {
-	for _, process := range processes {
-		CloseMessage(process)
+func CloseAll(messages []Message) {
+	for _, message := range messages {
+		CloseMessage(message)
 	}
 }

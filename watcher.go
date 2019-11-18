@@ -1,12 +1,12 @@
 package main
 
 type Watcher struct {
-	messages map[string]MessageProcess
+	messages map[string]Message
 	status   Status
 }
 
 func NewWatcher() Watcher {
-	messages := make(map[string]MessageProcess)
+	messages := make(map[string]Message)
 	return Watcher{
 		messages: messages,
 		status:   UNKNOWN,
@@ -17,28 +17,28 @@ func (watcher *Watcher) Status() Status {
 	return watcher.status
 }
 
-func (watcher *Watcher) Messages() []MessageProcess {
-	var messages []MessageProcess
+func (watcher *Watcher) Messages() []Message {
+	var messages []Message
 	for _, message := range watcher.messages {
 		messages = append(messages, message)
 	}
 	return messages
 }
 
-func (watcher *Watcher) MessagesFor(displays StringSet) []MessageProcess {
-	var messages []MessageProcess
+func (watcher *Watcher) MessagesFor(displays StringSet) []Message {
+	var messages []Message
 	for display := range displays {
 		message, contains := watcher.messages[display]
 		if contains {
 			messages = append(messages, message)
 		} else {
-			messages = append(messages, MessageProcess{PID: 0, Display: display})
+			messages = append(messages, Message{PID: 0, Display: display})
 		}
 	}
 	return messages
 }
 
-func (watcher *Watcher) Update(messages []MessageProcess, status Status) {
+func (watcher *Watcher) Update(messages []Message, status Status) {
 	for _, message := range messages {
 		watcher.messages[message.Display] = message
 	}
