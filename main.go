@@ -4,14 +4,6 @@ import (
 	"time"
 )
 
-type Parameters struct {
-	displays  StringSet
-	interval  time.Duration
-	message   string
-	threshold int
-	uevent    string
-}
-
 func DesiredDisplays(displays StringSet, activeDisplays StringSet) StringSet {
 	if len(displays) == 0 {
 		return activeDisplays
@@ -37,15 +29,7 @@ func tick(watcher *Watcher, params Parameters) {
 }
 
 func main() {
-	interval, _ := time.ParseDuration("1s")
-
-	params := Parameters{
-		displays:  SetFrom([]string{"eDP-1"}),
-		interval:  interval,
-		message:   "You battery is running low. Please plug in a power adapter",
-		threshold: 100,
-		uevent:    "/sys/class/power_supply/BAT0/uevent"}
-
+	params := CommandLineParameters()
 	watcher := NewWatcher()
 
 	tick(&watcher, params)
