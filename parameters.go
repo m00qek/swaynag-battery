@@ -23,9 +23,9 @@ Shows a message (using swaynag) when battery percentage is less then specified
 value.
 
 Usage:
-  sway-battery-nagbar [options]
-  sway-battery-nagbar -h | --help
-  sway-battery-nagbar --version
+  swaynag-battery [options]
+  swaynag-battery -h | --help
+  swaynag-battery --version
 
 Options:
   --displays <display-list>  Comma separated list of displays to show the

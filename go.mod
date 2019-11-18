@@ -1,4 +1,4 @@
-module sway-battery-nagbar
+module swaynag-battery
 
 go 1.13
 
