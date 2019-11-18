@@ -25,6 +25,10 @@ type Battery struct {
 	Status     Status
 }
 
+func (battery *Battery) Charging() bool {
+	return battery.Status == FULL || battery.Status == CHARGING
+}
+
 func parseStatus(value string) Status {
 	switch value {
 	case "Charging":

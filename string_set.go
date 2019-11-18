@@ -18,10 +18,15 @@ func (set StringSet) ToArray() []string {
 	return keys
 }
 
+func (set StringSet) Contains(item string) bool {
+	_, contains := set[item]
+	return contains
+}
+
 func Intersection(set1 StringSet, set2 StringSet) StringSet {
 	intersection := make(StringSet)
 	for item := range set1 {
-		if _, ok := set2[item]; ok {
+		if set2.Contains(item) {
 			intersection[item] = struct{}{}
 		}
 	}
