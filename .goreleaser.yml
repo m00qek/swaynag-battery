@@ -7,6 +7,9 @@ builds:
   goos:
     - linux
     - darwin
+signs:
+  - artifacts: checksum
+    args: ["--batch", "-u", "B7704FFB48AC73A1", "--output", "${signature}", "--detach-sign", "${artifact}"]
 archives:
 - replacements:
     darwin: Darwin
