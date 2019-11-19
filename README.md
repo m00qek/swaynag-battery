@@ -7,8 +7,10 @@ power supply is plugged in.
 
 ## Installing
 
-Clone this repo, run `make build` and copy `bin/swaynag-battery` to 
-somewhere in your `PATH`.
+Download the appropriate latest version binary from 
+[releases](https://github.com/m00qek/swaynag-battery/releases) or clone this
+repo, run `make build` and copy `bin/swaynag-battery` to somewhere in your
+`PATH`.
 
 ## API
 ```
@@ -31,6 +33,12 @@ Options:
   -h --help                  Show this screen.
   --version                  Show version.
 ```
+
+## Release Signatures
+
+Releases are signed with 
+[B7704FFB48AC73A1](https://keys.openpgp.org/vks/v1/by-fingerprint/2FC9D934AC901B875CAD71AAB7704FFB48AC73A1)
+and published [on GitHub](https://github.com/m00qek/swaynag-battery/releases).
 
 ## Acknowledgments
 
