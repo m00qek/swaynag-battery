@@ -1,5 +1,8 @@
 # swaynag-battery
 
+[![Release](https://img.shields.io/github/release/m00qek/swaynag-battery.svg?style=for-the-badge)](https://github.com/m00qek/swaynag-battery/releases/latest)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](/LICENSE.md)
+
 Shows a message on top of all displays (using 
 [swaynag](https://github.com/swaywm/sway/tree/master/swaynag)) when battery is 
 discharging and bellow an appointed threshold. Also, closes the message when a
