@@ -40,8 +40,8 @@ Options:
 `
 )
 
-func CommandLineParameters() Parameters {
-	args, err := docopt.ParseDoc(usage)
+func CommandLineParameters(arguments []string) Parameters {
+	args, err := docopt.ParseArgs(usage, arguments, version)
 	if err != nil {
 		fmt.Println("err", err)
 		panic(err)

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"time"
 )
 
@@ -29,7 +30,7 @@ func tick(watcher *Watcher, params Parameters) {
 }
 
 func main() {
-	params := CommandLineParameters()
+	params := CommandLineParameters(os.Args[1:])
 	watcher := NewWatcher()
 
 	tick(&watcher, params)
