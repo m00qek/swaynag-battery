@@ -15,6 +15,31 @@ Download the appropriate latest version binary from
 repo, run `make build` and copy `bin/swaynag-battery` to somewhere in your
 `PATH`.
 
+In order to automtically run `swaynag-battery` when you execute Sway, you can 
+configure [Sway to start using systemd](https://github.com/swaywm/sway/wiki/Systemd-integration)
+and add a new user service file in 
+`~/.config/systemd/user/swaynag-battery.service` with
+
+```
+[Unit]
+Description=Low battery notification
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/absolute/path/to/swaynag-battery
+
+[Install]
+WantedBy=sway-session.target
+```
+
+and then
+
+```bash
+systemctl --user enable swaynag-battery.service
+systemctl --user start swaynag-battery.service
+```
+
 ## API
 ```
 Shows a message (using swaynag) when battery percentage is less then specified
