@@ -23,6 +23,10 @@ func (set StringSet) Contains(item string) bool {
 	return contains
 }
 
+func EmptySet() StringSet {
+	return StringSet{}
+}
+
 func Intersection(set1 StringSet, set2 StringSet) StringSet {
 	intersection := make(StringSet)
 	for item := range set1 {

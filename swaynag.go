@@ -18,6 +18,7 @@ func show(text string, display string) (*Message, error) {
 
 	err := cmd.Start()
 	if err != nil {
+		logError("Unable to show swaynag in display '%s'.\n", display)
 		return nil, err
 	}
 
@@ -38,6 +39,7 @@ func ShowMessage(text string, message Message) (*Message, error) {
 	if isSwaynag(ps.FindProcess(message.PID)) {
 		return &message, nil
 	}
+
 	return show(text, message.Display)
 }
 
@@ -60,6 +62,7 @@ func ShowAll(text string, messages []Message) []Message {
 			openMessages = append(openMessages, *newMessage)
 		}
 	}
+
 	return openMessages
 }
 

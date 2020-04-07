@@ -9,11 +9,17 @@ func DesiredDisplays(displays StringSet, activeDisplays StringSet) StringSet {
 	if len(displays) == 0 {
 		return activeDisplays
 	}
+
 	return Intersection(displays, activeDisplays)
 }
 
 func tick(watcher *Watcher, params Parameters) {
-	battery, _ := LoadBatteryInfo(params.uevent)
+	battery, err := LoadBatteryInfo(params.uevent)
+	if err != nil {
+		logWarning("Skipping this cycle due to errors occurred.")
+		return
+	}
+
 	displays := DesiredDisplays(params.displays, ActiveDisplays())
 
 	if !battery.Charging() && battery.Capacity <= params.threshold {
@@ -31,7 +37,7 @@ func tick(watcher *Watcher, params Parameters) {
 
 func main() {
 	params := CommandLineParameters(os.Args[1:])
-	watcher := NewWatcher()
+	wtcher := NewWatcher()
 
 	tick(&watcher, params)
 	for range time.Tick(params.interval) {
