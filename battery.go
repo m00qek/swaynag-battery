@@ -93,8 +93,15 @@ func build(info map[string]string) (*Battery, error) {
 func LoadBatteryInfo(uevent string) (*Battery, error) {
 	content, err := load(uevent)
 	if err != nil {
+		logError("ERROR: Could not load battery file '%s'.", uevent)
 		return nil, err
 	}
 
-	return build(parse(content))
+	battery, err := build(parse(content))
+	if err != nil {
+		logError("Could not parse 'POWER_SUPPLY_CAPACITY' from battery file '%s'.", uevent)
+		return nil, err
+	}
+
+	return battery, nil
 }

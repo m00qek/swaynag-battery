@@ -10,10 +10,16 @@ type Display struct {
 	Active bool
 }
 
-func run() string {
+func run() (string, error) {
 	cmd := exec.Command("swaymsg", "-t", "get_outputs")
-	output, _ := cmd.Output()
-	return string(output)
+
+	output, err := cmd.Output()
+	if err != nil {
+		logError("Unable to get sway outputs.")
+		return "", err
+	}
+
+	return string(output), nil
 }
 
 func filterActive(displays []Display) []string {
@@ -23,12 +29,18 @@ func filterActive(displays []Display) []string {
 			activeDisplays = append(activeDisplays, display.Name)
 		}
 	}
+
 	return activeDisplays
 }
 
 func ActiveDisplays() StringSet {
 	var displays []Display
-	jsonOutput := run()
+	jsonOutput, err := run()
+
+	if err != nil {
+		return EmptySet()
+	}
+
 	json.Unmarshal([]byte(jsonOutput), &displays)
 	return SetFrom(filterActive(displays))
 }
