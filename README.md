@@ -15,7 +15,7 @@ Download the appropriate latest version binary from
 repo, run `make build` and copy `bin/swaynag-battery` to somewhere in your
 `PATH`.
 
-In order to automtically run `swaynag-battery` when you execute Sway, you can 
+In order to automatically run `swaynag-battery` when you execute Sway, you can 
 configure [Sway to start using systemd](https://github.com/swaywm/sway/wiki/Systemd-integration)
 and add a new user service file in 
 `~/.config/systemd/user/swaynag-battery.service` with

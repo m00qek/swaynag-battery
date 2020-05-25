@@ -37,7 +37,7 @@ func tick(watcher *Watcher, params Parameters) {
 
 func main() {
 	params := CommandLineParameters(os.Args[1:])
-	wtcher := NewWatcher()
+	watcher := NewWatcher()
 
 	tick(&watcher, params)
 	for range time.Tick(params.interval) {
