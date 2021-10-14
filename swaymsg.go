@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"os/exec"
 )
 
 type Display struct {
@@ -11,15 +10,14 @@ type Display struct {
 }
 
 func run() (string, error) {
-	cmd := exec.Command("swaymsg", "-t", "get_outputs")
+	response, err := sendIpc(swayGetOutputs)
 
-	output, err := cmd.Output()
 	if err != nil {
 		logError("Unable to get sway outputs.")
 		return "", err
 	}
 
-	return string(output), nil
+	return response, nil
 }
 
 func filterActive(displays []Display) []string {
