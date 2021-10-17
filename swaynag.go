@@ -14,7 +14,7 @@ type Message struct {
 }
 
 func show(text string, display string) (*Message, error) {
-	cmd := exec.Command("swaynag", "--message", text, "--output", display, "--layer", "overlay")
+	cmd := exec.Command("swaynag", "--message", text, "--output", display)
 
 	err := cmd.Start()
 	if err != nil {
