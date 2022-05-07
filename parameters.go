@@ -72,7 +72,7 @@ func CommandLineParameters(arguments []string) Parameters {
 	return Parameters{
 		displays:  SetFrom(displays),
 		interval:  interval,
-		message:   "You battery is running low. Please plug in a power adapter",
+		message:   "Your battery is running low. Please plug in a power adapter",
 		threshold: threshold,
 		uevent:    uevent}
 }
