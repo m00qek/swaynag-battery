@@ -35,6 +35,9 @@ Options:
   --interval <duration>      Check battery at every interval. [default: 5m]
   --uevent <path>            Uevent path for reading battery stats.
                              [default: /sys/class/power_supply/BAT0/uevent]
+  --message <message>        Use a custom low battery message. 
+                             [default: "Your battery is running low. Please 
+			     plug in a power adapter"]
   -h --help                  Show this screen.
   --version                  Show version.
 `
@@ -72,7 +75,7 @@ func CommandLineParameters(arguments []string) Parameters {
 	return Parameters{
 		displays:  SetFrom(displays),
 		interval:  interval,
-		message:   "Your battery is running low. Please plug in a power adapter",
+		message:   message,
 		threshold: threshold,
 		uevent:    uevent}
 }
